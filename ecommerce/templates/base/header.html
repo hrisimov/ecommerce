@@ -1,0 +1,31 @@
+<header class="header">
+    <a href="#" class="logo-link">
+        <i class="fa-solid fa-star-half-stroke icon"></i>
+        <h2 class="text">Hrisim's store</h2>
+    </a>
+    <nav class="navigation">
+        <ul class="list" role="list">
+            <li class="item">
+                <a href="#" class="basket-link">
+                    <i class="fa-solid fa-cart-shopping icon"></i>
+                    <span class="products-count">0</span>
+                </a>
+            </li>
+            {% if request.user.is_authenticated %}
+                <li class="item">
+                    <a href="#" class="link">Account</a>
+                </li>
+                <li class="item">
+                    <a href="#" class="link">Logout</a>
+                </li>
+            {% else %}
+                <li class="item">
+                    <a href="#" class="link">Login</a>
+                </li>
+                <li class="item">
+                    <a href="#" class="link">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>

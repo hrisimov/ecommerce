@@ -1,0 +1,89 @@
+/*--------------------
+    Global styles
+--------------------*/
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1920px;
+}
+
+.main {
+    min-height: calc(100vh - 80px - 60px);
+}
+
+a {
+    text-decoration: none;
+}
+
+/*--------------------
+    Header
+--------------------*/
+.header {
+    background-color: #24292F;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 160px;
+}
+
+.header a {
+    color: white;
+}
+
+.header .icon {
+    font-size: 40px;
+}
+
+.header .logo-link .icon {
+    vertical-align: middle;
+}
+
+.header .logo-link .text {
+    display: inline-block;
+    width: 94px;
+    vertical-align: middle;
+    line-height: 1;
+    font-size: 24px;
+    text-align: center;
+}
+
+.header .list {
+    display: flex;
+    align-items: center;
+}
+
+.header .basket-link {
+    position: relative;
+    display: inline-block;
+}
+
+.header .basket-link .products-count {
+    position: absolute;
+    display: inline-block;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    width: 24px;
+    left: 14px;
+}
+
+.header .item:not(:last-child) {
+    margin-right: 32px;
+}
+
+.header .item .link {
+    font-size: 18px;
+}
+
+/*--------------------
+    Footer
+--------------------*/
+.footer {
+    background-color: #24292F;
+    color: white;
+    font-size: 14px;
+    height: 60px;
+    text-align: center;
+    padding: 12px 0;
+    line-height: 1.3;
+}
