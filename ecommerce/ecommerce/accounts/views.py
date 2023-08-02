@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, views as auth_views
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
@@ -44,3 +44,12 @@ def activate(request, uidb64, token):
         return render(request, 'accounts/registration/account_activated.html')
     else:
         return render(request, 'accounts/registration/account_not_activated.html')
+
+
+class UserLoginView(auth_views.LoginView):
+    template_name = 'accounts/login.html'
+    redirect_authenticated_user = True
+
+
+class UserLogoutView(auth_views.LogoutView):
+    pass

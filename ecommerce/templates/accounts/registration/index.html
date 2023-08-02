@@ -16,7 +16,7 @@
         }
     </style>
 
-    <form class="form" action="{% url 'register' %}" method="post">
+    <form class="form" action="{% url 'accounts:register' %}" method="post">
         {% csrf_token %}
         <h2 class="title">Create an account.</h2>
         {{ form.non_field_errors }}
@@ -38,6 +38,6 @@
         {{ form.password2 }}
 
         <button class="btn">Register</button>
-        <a class="link" href="#">Already have an account?</a>
+        <a class="link" href="{% url 'accounts:login' %}">Already have an account?</a>
     </form>
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block styling %}
+    <link rel="stylesheet" href="{% static 'css/accounts/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'accounts:login' %}" class="form" method="post">
+        {% csrf_token %}
+        <h2 class="title">Login to your account.</h2>
+        {{ form.non_field_errors }}
+
+        {{ form.username.errors }}
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
+
+        {{ form.password.errors }}
+        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+        {{ form.password }}
+
+        <a href="#" class="link forgot-password-link">Forgot password?</a>
+        <button class="btn">Login</button>
+        <a href="{% url 'accounts:register' %}" class="link register-link">Don't have an account?</a>
+    </form>
+{% endblock %}

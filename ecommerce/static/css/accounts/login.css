@@ -1,0 +1,20 @@
+.form input:last-of-type {
+    margin-bottom: 8px;
+}
+
+.form .link {
+    font-size: 14px;
+}
+
+.form .forgot-password-link {
+    align-self: flex-end;
+    margin-bottom: 32px;
+}
+
+.form .btn {
+    margin-bottom: 16px;
+}
+
+.form .register-link {
+    align-self: center;
+}
