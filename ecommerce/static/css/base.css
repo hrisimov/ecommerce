@@ -8,10 +8,68 @@ body {
 
 .main {
     min-height: calc(100vh - 80px - 60px);
+    display: flex;
+    justify-content: center;
+    padding-top: 64px;
 }
 
 a {
     text-decoration: none;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+}
+
+.form .title,
+.form input:last-of-type {
+    margin-bottom: 32px;
+}
+
+.form .title,
+.form .btn {
+    align-self: center;
+}
+
+.form .errorlist li {
+    color: red;
+    white-space: nowrap;
+}
+
+.form input {
+    height: 48px;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding-left: 8px;
+    margin-bottom: 16px;
+}
+
+.btn {
+    all: unset;
+    background-color: skyblue;
+    border-radius: 4px;
+    padding: 8px 32px;
+    cursor: pointer;
+    transition: background-color 300ms linear;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: cornflowerblue;
 }
 
 /*--------------------

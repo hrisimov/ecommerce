@@ -19,8 +19,10 @@
 <body>
 {% include 'base/header.html' %}
 <main class="main">
-    {% block content %}
-    {% endblock %}
+    <div class="wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
 </main>
 {% include 'base/footer.html' %}
 {% block end_body_scripts %}

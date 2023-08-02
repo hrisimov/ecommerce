@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+    <style>
+        .main .btn {
+            margin-bottom: 16px;
+        }
+
+        .main .link {
+            align-self: center;
+            font-size: 14px;
+        }
+    </style>
+
+    <form class="form" action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <h2 class="title">Create an account.</h2>
+        {{ form.non_field_errors }}
+
+        {{ form.email.errors }}
+        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+
+        {{ form.username.errors }}
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
+
+        {{ form.password1.errors }}
+        <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+        {{ form.password1 }}
+
+        {{ form.password2.errors }}
+        <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+        {{ form.password2 }}
+
+        <button class="btn">Register</button>
+        <a class="link" href="#">Already have an account?</a>
+    </form>
+{% endblock %}
