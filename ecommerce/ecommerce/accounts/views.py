@@ -3,10 +3,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserPasswordResetForm
 from .tasks import send_account_activation_email
 from .tokens import account_activation_token
 
@@ -53,3 +54,23 @@ class UserLoginView(auth_views.LoginView):
 
 class UserLogoutView(auth_views.LogoutView):
     pass
+
+
+class UserPasswordResetView(auth_views.PasswordResetView):
+    form_class = UserPasswordResetForm
+    template_name = 'accounts/password_reset/index.html'
+    email_template_name = 'accounts/password_reset/password_reset_email.html'
+    success_url = reverse_lazy('accounts:password reset done')
+
+
+class UserPasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'accounts/password_reset/password_reset_done.html'
+
+
+class UserPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'accounts/password_reset/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password reset complete')
+
+
+class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'accounts/password_reset/password_reset_complete.html'
