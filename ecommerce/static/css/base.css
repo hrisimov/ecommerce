@@ -32,17 +32,17 @@ h3 {
 .form {
     display: flex;
     flex-direction: column;
-    width: 320px;
+    align-items: center;
+    min-width: 320px;
+}
+
+.form div {
+    margin-bottom: 16px;
 }
 
 .form .title,
-.form input:last-of-type {
+.form div:last-of-type {
     margin-bottom: 32px;
-}
-
-.form .title,
-.form .btn {
-    align-self: center;
 }
 
 .form .errorlist li {
@@ -51,11 +51,11 @@ h3 {
 }
 
 .form input {
+    width: 320px;
     height: 48px;
     border: 1px solid black;
     border-radius: 4px;
     padding-left: 8px;
-    margin-bottom: 16px;
 }
 
 .btn {

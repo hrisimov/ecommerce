@@ -1,4 +1,8 @@
-.form input:last-of-type {
+.form label {
+    display: block;
+}
+
+.form div:last-of-type {
     margin-bottom: 8px;
 }
 
@@ -13,8 +17,4 @@
 
 .form .btn {
     margin-bottom: 16px;
-}
-
-.form .register-link {
-    align-self: center;
 }
