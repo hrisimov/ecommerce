@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Account details
+{% endblock %}
+
+{% block styling %}
+    <link rel="stylesheet" href="{% static 'css/accounts/account_details.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1 class="title">Account details:</h1>
+    <div>
+        <p>Email: {{ request.user.email }}</p>
+        <p>Username: {{ request.user.username }}</p>
+        <p>First name:
+            {% if profile.first_name %}
+                {{ profile.first_name }}
+            {% else %}
+                Unset
+            {% endif %}
+        </p>
+        <p>Last name:
+            {% if profile.last_name %}
+                {{ profile.last_name }}
+            {% else %}
+                Unset
+            {% endif %}
+        </p>
+    </div>
+    <a href="#" class="btn change-password-link">Change password</a>
+    <a href="#" class="btn edit-account-link">Edit account</a>
+    <a href="#" class="btn delete-account-link">Delete account</a>
+{% endblock %}

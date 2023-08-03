@@ -1,0 +1,45 @@
+.main .title {
+    text-align: center;
+}
+
+.main .title,
+.main .wrapper div {
+    margin-bottom: 32px;
+}
+
+.main .wrapper div {
+    border: 1px solid gray;
+    border-radius: 24px;
+}
+
+.main p {
+    padding: 24px 48px;
+}
+
+.main p:not(:last-of-type) {
+    border-bottom: 1px solid gray;
+}
+
+.main p,
+.main .btn {
+    font-size: 20px;
+}
+
+.main .btn {
+    display: block;
+    text-align: center;
+    border-radius: 24px;
+    margin-bottom: 16px;
+}
+
+.main .btn.change-password-link {
+    background-color: #53cd52;
+}
+
+.main .btn.edit-account-link {
+    background-color: #e9ca26;
+}
+
+.main .btn.delete-account-link {
+    background-color: #ef4848;
+}

@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model, views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
@@ -8,6 +9,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from .forms import UserRegistrationForm, UserPasswordResetForm
+from .models import Profile
 from .tasks import send_account_activation_email
 from .tokens import account_activation_token
 
@@ -74,3 +76,9 @@ class UserPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
 class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     template_name = 'accounts/password_reset/password_reset_complete.html'
+
+
+@login_required
+def get_account_details(request):
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'accounts/account_details.html', {'profile': profile})
