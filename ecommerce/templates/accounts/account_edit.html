@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Edit account
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'accounts:edit' %}" class="form" method="post">
+        {% csrf_token %}
+        <h2 class="title">Edit your account.</h2>
+        {{ user_form.non_field_errors }}
+        {{ profile_form.non_field_errors }}
+
+        <div>
+            {{ user_form.email.errors }}
+            <label for="{{ user_form.email.id_for_label }}">{{ user_form.email.label }}</label>
+            {{ user_form.email }}
+        </div>
+
+        <div>
+            {{ user_form.username.errors }}
+            <label for="{{ user_form.username.id_for_label }}">{{ user_form.username.label }}</label>
+            {{ user_form.username }}
+        </div>
+
+        <div>
+            {{ profile_form.first_name.errors }}
+            <label for="{{ profile_form.first_name.id_for_label }}">{{ profile_form.first_name.label }}</label>
+            {{ profile_form.first_name }}
+        </div>
+
+        <div>
+            {{ profile_form.last_name.errors }}
+            <label for="{{ profile_form.last_name.id_for_label }}">{{ profile_form.last_name.label }}</label>
+            {{ profile_form.last_name }}
+        </div>
+
+        <button class="btn">Save</button>
+    </form>
+{% endblock %}

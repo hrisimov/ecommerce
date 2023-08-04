@@ -2,7 +2,7 @@ from django.urls import path
 
 from ecommerce.accounts.views import register, activate, UserLoginView, UserLogoutView, UserPasswordResetView, \
     UserPasswordResetDoneView, UserPasswordResetConfirmView, UserPasswordResetCompleteView, get_account_details, \
-    UserPasswordChangeView, UserPasswordChangeDoneView
+    UserPasswordChangeView, UserPasswordChangeDoneView, edit_account
 
 app_name = 'accounts'
 
@@ -18,6 +18,7 @@ urlpatterns = (
     path('details/', get_account_details, name='details'),
     path('password-change/', UserPasswordChangeView.as_view(), name='password change'),
     path('password-change-done/', UserPasswordChangeDoneView.as_view(), name='password change done'),
+    path('edit/', edit_account, name='edit'),
 )
 
 from . import signals

@@ -2,13 +2,13 @@ from django.contrib.auth import get_user_model, views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from .forms import UserRegistrationForm, UserPasswordResetForm
+from .forms import UserRegistrationForm, UserPasswordResetForm, UserEditForm, ProfileEditForm
 from .models import Profile
 from .tasks import send_account_activation_email
 from .tokens import account_activation_token
@@ -91,3 +91,24 @@ class UserPasswordChangeView(auth_views.PasswordChangeView):
 
 class UserPasswordChangeDoneView(auth_views.PasswordChangeDoneView):
     template_name = 'accounts/password_change/password_change_done.html'
+
+
+@login_required
+def edit_account(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.user, request.POST, instance=request.user)
+        profile_form = ProfileEditForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('accounts:details')
+    else:
+        user_form = UserEditForm(request.user, instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+
+    return render(request, 'accounts/account_edit.html', context)
