@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'accounts:login' %}" class="form" method="post">
+    <form action="{% url 'accounts:login' %}?next={{ next }}" class="form" method="post">
         {% csrf_token %}
         <h2 class="title">Login to your account.</h2>
         {{ form.non_field_errors }}

@@ -82,3 +82,12 @@ class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 def get_account_details(request):
     profile = Profile.objects.get(user=request.user)
     return render(request, 'accounts/account_details.html', {'profile': profile})
+
+
+class UserPasswordChangeView(auth_views.PasswordChangeView):
+    template_name = 'accounts/password_change/index.html'
+    success_url = reverse_lazy('accounts:password change done')
+
+
+class UserPasswordChangeDoneView(auth_views.PasswordChangeDoneView):
+    template_name = 'accounts/password_change/password_change_done.html'
