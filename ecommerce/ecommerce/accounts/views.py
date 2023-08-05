@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, views as auth_views
+from django.contrib.auth import get_user_model, views as auth_views, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,8 +7,9 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views import generic as views
 
-from .forms import UserRegistrationForm, UserPasswordResetForm, UserEditForm, ProfileEditForm
+from .forms import UserRegistrationForm, UserPasswordResetForm, UserEditForm, ProfileEditForm, UserDeleteForm
 from .models import Profile
 from .tasks import send_account_activation_email
 from .tokens import account_activation_token
@@ -112,3 +113,22 @@ def edit_account(request):
     }
 
     return render(request, 'accounts/account_edit.html', context)
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        form = UserDeleteForm(request.POST, instance=request.user)
+        form.instance.is_active = False
+        if form.is_valid():
+            form.save()
+            logout(request)
+            return redirect('accounts:delete done')
+    else:
+        form = UserDeleteForm(instance=request.user)
+
+    return render(request, 'accounts/account_delete/index.html', {'form': form})
+
+
+class AccountDeleteDoneView(views.TemplateView):
+    template_name = 'accounts/account_delete/account_delete_done.html'

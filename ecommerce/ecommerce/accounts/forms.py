@@ -42,6 +42,12 @@ class UserEditForm(forms.ModelForm):
         }
 
 
+class UserDeleteForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ()
+
+
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile

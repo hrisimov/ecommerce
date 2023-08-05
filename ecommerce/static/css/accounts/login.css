@@ -1,9 +1,18 @@
+.form  div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+}
+
+.form  div:nth-of-type(2) input {
+    margin-bottom: 8px;
+}
+
 .form label {
     display: block;
 }
 
 .form div:last-of-type {
-    margin-bottom: 8px;
+    margin-bottom: 32px;
 }
 
 .form .link {
@@ -12,7 +21,6 @@
 
 .form .forgot-password-link {
     align-self: flex-end;
-    margin-bottom: 32px;
 }
 
 .form .btn {
