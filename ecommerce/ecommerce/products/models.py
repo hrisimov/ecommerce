@@ -56,3 +56,19 @@ class Product(AuditEntity):
 
     class Meta:
         ordering = ('-created_on',)
+
+
+class ProductImage(AuditEntity):
+    image = models.ImageField(
+        upload_to='product_images/',
+        default='product_images/default.png',
+    )
+
+    is_main = models.BooleanField(
+        default=False,
+    )
+
+    product = models.ForeignKey(
+        to=Product,
+        on_delete=models.CASCADE,
+    )
