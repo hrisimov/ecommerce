@@ -10,7 +10,7 @@ body {
     min-height: calc(100vh - 80px - 60px);
     display: flex;
     justify-content: center;
-    padding-top: 64px;
+    padding: 64px 0;
     background-color: lavenderblush;
 }
 

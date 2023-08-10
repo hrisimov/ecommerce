@@ -1,0 +1,72 @@
+.main > .wrapper {
+    display: flex;
+    gap: 160px;
+}
+
+.main .sidebar .categories-title {
+    margin-bottom: 8px;
+}
+
+.main .products-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    margin-bottom: 64px;
+}
+
+.main .products-title {
+    line-height: 1.22;
+    border-bottom: 1px solid gray;
+    margin-bottom: 32px;
+}
+
+.main .products-container .link {
+    width: 298px;
+    padding: 24px;
+    background-color: white;
+    color: black;
+    border-radius: 16px;
+}
+
+.main .card .img-container {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 12px;
+}
+
+.main .card .img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.main .card .info {
+    text-align: center;
+}
+
+.main .card .card-title {
+    margin-bottom: 4px;
+}
+
+.main .card .description {
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.main .card .price {
+    font-weight: bold;
+}
+
+.main .pagination {
+    text-align: center;
+    font-weight: bold;
+}
+
+.main .pagination .current {
+    margin: 0 16px;
+}
+
+.main .pagination .first,
+.main .pagination .next {
+    margin-right: 4px;
+}

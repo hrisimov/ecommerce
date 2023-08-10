@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Products
+{% endblock %}
+
+{% block styling %}
+    <link rel="stylesheet" href="{% static 'css/products/products_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <aside class="sidebar">
+        <h2 class="categories-title">Categories</h2>
+        <ul class="list" role="list">
+            <li class="item">
+                <a href="{% url 'products:list' %}" class="link">All products</a>
+            </li>
+            {% for category in categories %}
+                <li class="item">
+                    <a href="{% url 'products:list by category' category.slug %}" class="link">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </aside>
+
+    <div class="wrapper">
+        <h1 class="products-title">
+            {% if category %}
+                {{ category.name }}
+            {% else %}
+                All products
+            {% endif %}
+        </h1>
+        <div class="products-container">
+            {% for product in product_list %}
+                <a href="#" class="link">
+                    <article class="card">
+                        <div class="img-container">
+                            {% with product.productimage_set.all|first as featured_image %}
+                                <img src="{{ featured_image.image.url }}" alt="" class="img">
+                            {% endwith %}
+                        </div>
+                        <div class="info">
+                            <h3 class="card-title">{{ product.name }}</h3>
+                            <p class="description">{{ product.description|truncatewords:10 }}</p>
+                            <p class="price">{{ product.price }}$</p>
+                        </div>
+                    </article>
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="first">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% else %}
+                    <a class="first">&laquo; first</a>
+                    <a>previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="next">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% else %}
+                    <a class="next">next</a>
+                    <a>last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock %}
