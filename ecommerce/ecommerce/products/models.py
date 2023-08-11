@@ -28,6 +28,8 @@ class Product(AuditEntity):
     PRICE_MAX_DIGITS = 6
     PRICE_DECIMAL_PLACES = 2
 
+    STOCK_MIN_VALUE = 0
+
     name = models.CharField(
         max_length=NAME_MAX_LENGTH,
         unique=True,
@@ -54,6 +56,10 @@ class Product(AuditEntity):
     def __str__(self):
         return self.name
 
+    @property
+    def in_stock(self):
+        return self.stock > self.STOCK_MIN_VALUE
+
     class Meta:
         ordering = ('-created_on',)
 
@@ -72,3 +78,6 @@ class ProductImage(AuditEntity):
         to=Product,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        ordering = ('-is_main',)
