@@ -34,7 +34,7 @@
         </h1>
         <div class="products-container">
             {% for product in product_list %}
-                <a href="#" class="link">
+                <a href="{% url 'products:product details' product.slug %}" class="link">
                     <article class="card">
                         <div class="img-container">
                             {% with product.productimage_set.all|first as featured_image %}

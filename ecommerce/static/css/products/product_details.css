@@ -1,0 +1,108 @@
+.main .wrapper {
+    display: flex;
+    gap: 128px;
+}
+
+.images {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.images,
+.info {
+    width: 712px;
+}
+
+#featured {
+    object-fit: cover;
+    max-width: 500px;
+    max-height: 600px;
+    border: 2px solid black;
+    cursor: pointer;
+    margin-top: 38px;
+}
+
+.thumbnail {
+    object-fit: cover;
+    max-width: 180px;
+    max-height: 100px;
+    opacity: 0.5;
+    border: 2px solid black;
+    cursor: pointer;
+    transition: opacity 200ms linear;
+}
+
+.active {
+    opacity: 1;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.thumbnails-wrapper {
+    max-height: 316px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-y: hidden;
+}
+
+.chevron {
+    font-size: 30px;
+    cursor: pointer;
+    transition: opacity 200ms linear;
+}
+
+.chevron:hover {
+    opacity: 0.5;
+}
+
+
+.info {
+    margin-top: 38px;
+}
+
+.title {
+    line-height: 1;
+    font-size: 36px;
+    border-bottom: 1px solid gray;
+}
+
+.title,
+.description {
+    margin-bottom: 36px;
+}
+
+.price,
+form div {
+    margin-bottom: 24px;
+}
+
+.price .value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+select {
+    border: 1px solid black;
+    padding: 4px;
+}
+
+select,
+select option {
+    font-weight: bold;
+}
+
+.btn {
+    background-color: #5ab45a;
+}
+
+.btn:hover {
+    background-color: #5ab45a;
+}

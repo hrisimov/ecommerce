@@ -26,3 +26,16 @@ class ProductsListView(views.ListView):
         context['category'] = self.by_category
         context['categories'] = Category.objects.all()
         return context
+
+
+class ProductDetailView(views.DetailView):
+    model = Product
+    template_name = 'products/product_details.html'
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('productimage_set')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['select_max_quantity'] = 10 if context['product'].stock > 10 else context['product'].stock
+        return context
