@@ -1,4 +1,8 @@
-.main .wrapper {
+.main {
+    padding: 48px 0;
+}
+
+.main .content-wrapper {
     display: flex;
     gap: 128px;
 }
@@ -100,9 +104,44 @@ select option {
 }
 
 .btn {
-    background-color: #5ab45a;
+    font-weight: bold;
+    color: lavenderblush;
 }
 
-.btn:hover {
+.add-to-basket-btn {
     background-color: #5ab45a;
+    border: 3px solid #5ab45a;
+}
+
+.add-to-basket-btn:hover {
+    color: #5ab45a;
+    background-color: transparent;
+}
+
+.out-of-stock-btn {
+    background-color: #e32020;
+    border: 3px solid #e32020;
+    cursor: unset;
+}
+
+.out-of-stock-btn:hover {
+    background-color: #e32020;
+}
+
+ul.messages {
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.message {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: lightgreen;
+    border-radius: 8px;
+    padding: 16px 24px;
+}
+
+.message .icon {
+    font-size: 24px;
+    margin-right: 8px;
 }

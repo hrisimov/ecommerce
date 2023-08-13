@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views import generic as views
 
+from ecommerce.products.forms import AddProductToBasketForm
 from ecommerce.products.models import Product, Category
 
 
@@ -37,5 +38,5 @@ class ProductDetailView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['select_max_quantity'] = 10 if context['product'].stock > 10 else context['product'].stock
+        context['form'] = AddProductToBasketForm(min(context['product'].stock, 10))
         return context

@@ -1,5 +1,4 @@
 {% extends 'base/base.html' %}
-{% load filters %}
 {% load static %}
 
 {% block title %}
@@ -11,37 +10,51 @@
 {% endblock %}
 
 {% block content %}
-    <div class="images">
-        {% with product.productimage_set.all|first as featured_image %}
-            <div class="slider">
-                <i class="fa-solid fa-circle-chevron-up chevron"></i>
-                <div class="thumbnails-wrapper">
-                    <img class="thumbnail active" src="{{ featured_image.image.url }}" alt="">
-                    {% for product_image in product.productimage_set.all|slice:"1:" %}
-                        <img class="thumbnail" src="{{ product_image.image.url }}" alt="">
-                    {% endfor %}
+    {% if messages %}
+        <ul class="messages" role="list">
+            {% for message in messages %}
+                <li class="message">
+                    <i class="fa-solid fa-cart-plus icon"></i> {{ message }} to your <a href="#">basket</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="content-wrapper">
+        <div class="images">
+            {% with product.productimage_set.all|first as featured_image %}
+                <div class="slider">
+                    <i class="fa-solid fa-circle-chevron-up chevron"></i>
+                    <div class="thumbnails-wrapper">
+                        <img class="thumbnail active" src="{{ featured_image.image.url }}" alt="">
+                        {% for product_image in product.productimage_set.all|slice:"1:" %}
+                            <img class="thumbnail" src="{{ product_image.image.url }}" alt="">
+                        {% endfor %}
+                    </div>
+                    <i class="fa-solid fa-circle-chevron-down chevron"></i>
                 </div>
-                <i class="fa-solid fa-circle-chevron-down chevron"></i>
-            </div>
-            <img id="featured" src="{{ featured_image.image.url }}" alt="">
-        {% endwith %}
-    </div>
+                <img id="featured" src="{{ featured_image.image.url }}" alt="">
+            {% endwith %}
+        </div>
 
-    <div class="info">
-        <h1 class="title">{{ product.name }}</h1>
-        <p class="description">{{ product.description }}</p>
-        <p class="price">Single price: <span class="value">{{ product.price }}$</span></p>
-        <form action="#">
-            <div>
-                <label for="quantity-select">Quantity:</label>
-                <select name="quantity" id="quantity-select">
-                    {% for q in select_max_quantity|generate_range %}
-                        <option value="{{ q }}">{{ q }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button class="btn">Add to basket</button>
-        </form>
+        <div class="info">
+            <h1 class="title">{{ product.name }}</h1>
+            <p class="description">{{ product.description }}</p>
+            <p class="price">Single price: <span class="value">{{ product.price }}$</span></p>
+            {% if product.in_stock %}
+                <form action="{% url 'baskets:add product' product.slug %}" method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div>
+                        {{ form.quantity.errors }}
+                        <label for="{{ form.quantity.id_for_label }}">{{ form.quantity.label }}</label>
+                        {{ form.quantity }}
+                    </div>
+                    <button class="btn add-to-basket-btn">Add to basket</button>
+                </form>
+            {% else %}
+                <button class="btn out-of-stock-btn">Out of stock</button>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 
