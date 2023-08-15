@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block styling %}
+    <link rel="stylesheet" href="{% static 'css/basket/basket_summary.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="basket">
+        <h1 class="title">Basket items</h1>
+        {% for item in request.basket %}
+            <article class="item">
+                {% with item.product.productimage_set.all|first as featured_image %}
+                    <img src="{{ featured_image.image.url }}" alt="" class="img">
+                {% endwith %}
+                <div class="info">
+                    <a href="{% url 'products:product details' item.product.slug %}">
+                        <h2 class="title">{{ item.product.name }}</h2>
+                    </a>
+                    <p class="price">Single price: <span class="value">{{ item.product.price }}$</span></p>
+                    {% if item.product.in_stock %}
+                        <div>
+                            <label for="select-quantity">Quantity: </label>
+                            <select name="quantity" id="select-quantity">
+                                {% with item.quantity|add:10|get_lesser:item.product.stock as select_max_quantity %}
+                                    {% for q in select_max_quantity|generate_range %}
+                                        <option value="{{ q }}" {% if q == item.quantity %}selected{% endif %}>{{ q }}</option>
+                                    {% endfor %}
+                                {% endwith %}
+                            </select>
+                        </div>
+                        <span class="update">Update</span>
+                    {% else %}
+                        <span class="out-of-stock">Out of stock</span>
+                    {% endif %}
+                    <span class="delete">Delete</span>
+                </div>
+            </article>
+        {% empty %}
+            <h2 class="subtitle">Your basket is empty.</h2>
+        {% endfor %}
+    </section>
+    {% if not request.basket.is_empty %}
+        <div>
+            <p class="price">Subtotal price: <span class="value">{{ request.basket.calculate_subtotal_price }}$</span></p>
+            <button class="btn">Continue</button>
+        </div>
+    {% endif %}
+{% endblock %}

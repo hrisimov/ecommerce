@@ -1,0 +1,93 @@
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.basket {
+    width: 45vw;
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px 36px;
+}
+
+.basket > title {
+    margin-bottom: 16px;
+}
+
+.basket > .title,
+.basket .item:not(:last-child) {
+    border-bottom: 1px solid gray;
+}
+
+.basket .item {
+    display: flex;
+    gap: 28px;
+    padding: 18px 0;
+}
+
+.img {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+}
+
+.info .title {
+    color: black;
+}
+
+.info .title,
+.price {
+    margin-bottom: 16px;
+}
+
+.info .title,
+.info div {
+    display: inline-block;
+}
+
+.info div,
+.info span {
+    margin-right: 16px;
+}
+
+.price .value,
+select,
+option {
+    font-weight: bold;
+}
+
+select {
+    border: 1px solid black;
+    padding: 4px;
+}
+
+.info span.update:hover,
+.info span.delete:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.info span.out-of-stock {
+    color: red;
+}
+
+.wrapper > div {
+    width: 15vw;
+    background-color: white;
+    border-radius: 16px;
+    text-align: center;
+    padding: 24px;
+}
+
+.btn {
+    font-weight: bold;
+    color: lavenderblush;
+    background-color: #5ab45a;
+    border: 3px solid #5ab45a;
+}
+
+.btn:hover {
+    color: #5ab45a;
+    background-color: transparent;
+}

@@ -6,9 +6,9 @@
     <nav class="navigation">
         <ul class="list" role="list">
             <li class="item">
-                <a href="#" class="basket-link">
+                <a href="{% url 'baskets:summary' %}" class="basket-link">
                     <i class="fa-solid fa-cart-shopping icon"></i>
-                    <span class="products-count">0</span>
+                    <span class="products-count">{{ request.basket|length }}</span>
                 </a>
             </li>
             {% if request.user.is_authenticated %}

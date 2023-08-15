@@ -22,3 +22,7 @@ def add_product_to_basket(request, slug):
             'form': form,
         }
         return render(request, 'products/product_details.html', context)
+
+
+def get_basket_summary(request):
+    return render(request, 'basket/basket_summary.html')
