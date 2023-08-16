@@ -19,13 +19,13 @@ async function updateProduct() {
             },
             body: JSON.stringify({productId, quantity}),
         });
-        applyUpdatedValues(select, await response.json());
+        updateTemplateValues(select, await response.json());
     } catch (error) {
         console.log(error);
     }
 }
 
-function applyUpdatedValues(select, {productQuantity, productStock, basketTotalQuantity, subtotalPrice}) {
+function updateTemplateValues(select, {productQuantity, productStock, basketTotalQuantity, subtotalPrice}) {
     let selectMaxQuantity = Math.min(productQuantity + 10, productStock);
     select.innerHTML = '';
 

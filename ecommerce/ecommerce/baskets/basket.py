@@ -21,6 +21,11 @@ class Basket:
         self.basket[pk]['quantity'] = new_quantity
         self._save()
 
+    def delete(self, product):
+        pk = str(product.pk)
+        del self.basket[pk]
+        self._save()
+
     def calculate_subtotal_price(self):
         """
         Available after visiting basket summary since subtotal price is needed for first time there.

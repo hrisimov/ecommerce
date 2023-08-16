@@ -14,7 +14,7 @@
         <ul class="messages" role="list">
             {% for message in messages %}
                 <li class="message">
-                    <i class="fa-solid fa-cart-plus icon"></i> {{ message }} to your <a href="#">basket</a>
+                    <i class="fa-solid fa-cart-plus icon"></i> {{ message }} to your <a href="{% url 'baskets:summary' %}">basket</a>
                 </li>
             {% endfor %}
         </ul>
