@@ -1,4 +1,7 @@
+import json
+
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
@@ -26,3 +29,21 @@ def add_product_to_basket(request, slug):
 
 def get_basket_summary(request):
     return render(request, 'basket/basket_summary.html')
+
+
+def update_product_in_basket(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        pk = int(body['productId'])
+        quantity = int(body['quantity'])
+
+        product = get_object_or_404(Product, pk=pk)
+        quantity = min(quantity, product.stock)
+        request.basket.update(product, quantity)
+
+        return JsonResponse({
+            'productQuantity': quantity,
+            'productStock': product.stock,
+            'basketTotalQuantity': len(request.basket),
+            'subtotalPrice': request.basket.calculate_subtotal_price(),
+        })

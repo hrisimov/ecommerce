@@ -10,7 +10,7 @@
     <section class="basket">
         <h1 class="title">Basket items</h1>
         {% for item in request.basket %}
-            <article class="item">
+            <article id="{{ item.product.pk }}" class="item">
                 {% with item.product.productimage_set.all|first as featured_image %}
                     <img src="{{ featured_image.image.url }}" alt="" class="img">
                 {% endwith %}
@@ -47,4 +47,12 @@
             <button class="btn">Continue</button>
         </div>
     {% endif %}
+{% endblock %}
+
+{% block end_body_scripts %}
+    <script>
+        var updateURL = '{% url 'baskets:update product' %}';
+        var csrftoken = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'js/basket/update_product.js' %}"></script>
 {% endblock %}
