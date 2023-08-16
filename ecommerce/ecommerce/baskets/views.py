@@ -47,3 +47,17 @@ def update_product_in_basket(request):
             'basketTotalQuantity': len(request.basket),
             'subtotalPrice': request.basket.calculate_subtotal_price(),
         })
+
+
+def delete_product_from_basket(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        pk = body['productId']
+
+        product = get_object_or_404(Product, pk=pk)
+        request.basket.delete(product)
+
+        return JsonResponse({
+            'basketTotalQuantity': len(request.basket),
+            'subtotalPrice': request.basket.calculate_subtotal_price(),
+        })

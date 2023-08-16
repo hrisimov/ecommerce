@@ -52,7 +52,9 @@
 {% block end_body_scripts %}
     <script>
         var updateURL = '{% url 'baskets:update product' %}';
+        var deleteURL = '{% url 'baskets:delete product' %}';
         var csrftoken = '{{ csrf_token }}';
     </script>
     <script src="{% static 'js/basket/update_product.js' %}"></script>
+    <script src="{% static 'js/basket/delete_product.js' %}"></script>
 {% endblock %}
