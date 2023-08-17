@@ -1,0 +1,60 @@
+.form.form div {
+    width: unset;
+    margin-bottom: 0;
+}
+
+.form div.fields {
+    display: grid;
+    grid-template-areas:
+            "first-name   last-name"
+            "phone-number ."
+            "province     town-city"
+            "address      address"
+            "def          .";
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.first-name {
+    grid-area: first-name;
+}
+
+.last-name {
+    grid-area: last-name;
+}
+
+.phone-number {
+    grid-area: phone-number;
+}
+
+.province {
+    grid-area: province;
+}
+
+.town-city {
+    grid-area: town-city;
+}
+
+.address {
+    grid-area: address;
+}
+
+.default {
+    grid-area: def;
+}
+
+label {
+    display: inline-block;
+    min-width: 105px;
+}
+
+.address input {
+    width: 87%;
+}
+
+.default input {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
