@@ -1,0 +1,61 @@
+.addresses .heading {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    margin-bottom: 32px;
+}
+
+.heading .icon {
+    font-size: 40px;
+    color: green;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.card {
+    max-width: 360px;
+    position: relative;
+    background-color: white;
+    border: 1px dashed gray;
+    border-radius: 6px;
+    padding: 32px 48px;
+}
+
+.card .icon {
+    font-size: 24px;
+    color: crimson;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
+
+.card .full-name,
+.card .phone-number,
+.card .location {
+    margin-bottom: 8px;
+}
+
+.card .address {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    margin-bottom: 24px;
+}
+
+.card .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 32px;
+    row-gap: 12px;
+}
+
+.buttons .link {
+    font-weight: bold;
+}
+
+.buttons .link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Addresses
+{% endblock %}
+
+{% block styling %}
+    <link rel="stylesheet" href="{% static 'css/addresses/addresses_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="addresses">
+        <div class="heading">
+            <h1 class="title">My addresses</h1>
+            <a href="{% url 'addresses:create' %}" class="link">
+                <i class="fa-solid fa-circle-plus icon"></i>
+            </a>
+        </div>
+        <div class="cards">
+            {% for address in address_list %}
+                <article class="card">
+                    {% if address.default %}
+                        <i class="fa-solid fa-thumbtack icon"></i>
+                    {% endif %}
+                    <h3 class="full-name">{{ address.full_name }}</h3>
+                    <p class="phone-number">{{ address.phone_number }}</p>
+                    <p class="location">{{ address.town_city }}, {{ address.province }}</p>
+                    <p class="address">{{ address.address_line }}</p>
+                    <div class="buttons">
+                        {% if not address.default %}
+                            <a href="#" class="link">Set default</a>
+                        {% endif %}
+                        <a href="#" class="link">Edit</a>
+                        <a href="#" class="link">Delete</a>
+                    </div>
+                </article>
+            {% empty %}
+                <h2>You don't have addresses yet.</h2>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

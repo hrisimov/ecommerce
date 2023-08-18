@@ -59,5 +59,9 @@ class Address(models.Model):
         on_delete=models.CASCADE,
     )
 
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     class Meta:
         verbose_name_plural = 'Addresses'
