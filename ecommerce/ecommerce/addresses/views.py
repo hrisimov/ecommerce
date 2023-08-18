@@ -2,7 +2,7 @@ from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from ecommerce.addresses.forms import AddressCreateForm
+from ecommerce.addresses.forms import AddressCreateForm, AddressEditForm
 from ecommerce.addresses.models import Address
 
 
@@ -22,3 +22,16 @@ class AddressListView(auth_mixins.LoginRequiredMixin, views.ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+
+class AddressEditView(auth_mixins.LoginRequiredMixin, views.UpdateView):
+    model = Address
+    form_class = AddressEditForm
+    template_name = 'addresses/address_edit.html'
+    success_url = reverse_lazy('addresses:list')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset=queryset)
+        if obj not in self.request.user.address_set.all():
+            return self.handle_no_permission()
+        return obj

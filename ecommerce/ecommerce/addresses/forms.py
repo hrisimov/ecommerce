@@ -12,3 +12,8 @@ class AddressBaseForm(forms.ModelForm):
 class AddressCreateForm(AddressBaseForm):
     class Meta(AddressBaseForm.Meta):
         pass
+
+
+class AddressEditForm(AddressBaseForm):
+    class Meta(AddressBaseForm.Meta):
+        pass
