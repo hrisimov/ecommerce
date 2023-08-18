@@ -29,7 +29,7 @@
                     <p class="address">{{ address.address_line }}</p>
                     <div class="buttons">
                         {% if not address.default %}
-                            <a href="#" class="link">Set default</a>
+                            <a href="#" class="link set-default-address-link">Set default</a>
                         {% endif %}
                         <a href="{% url 'addresses:edit' address.pk %}" class="link">Edit</a>
                         <a href="#" class="link delete-address-link">Delete</a>
@@ -45,7 +45,9 @@
 {% block end_body_scripts %}
     <script>
         var deleteURL = '{% url 'addresses:delete' %}'
+        var setDefaultURL = '{% url 'addresses:set default' %}'
         var csrftoken = '{{ csrf_token }}';
     </script>
     <script src="{% static 'js/addresses/address_delete.js' %}"></script>
+    <script src="{% static 'js/addresses/set_new_default_address.js' %}"></script>
 {% endblock %}

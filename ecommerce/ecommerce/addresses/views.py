@@ -52,3 +52,24 @@ def delete_address(request):
         return JsonResponse({
             'message': 'The address was successfully deleted.',
         })
+
+
+@login_required
+def set_new_default_address(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        address_pk = body.get('addressId')
+        new_address_pk = body.get('newAddressId')
+
+        if address_pk:
+            address = get_object_or_404(Address, pk=address_pk)
+            address.default = False
+            address.save()
+
+        new_address = get_object_or_404(Address, pk=new_address_pk)
+        new_address.default = True
+        new_address.save()
+
+        return JsonResponse({
+            'message': 'The default address was changed successfully.',
+        })
