@@ -1,4 +1,5 @@
 from django.contrib.auth import mixins as auth_mixins
+from django.urls import reverse_lazy
 from django.views import generic as views
 
 from ecommerce.addresses.forms import AddressCreateForm
@@ -8,7 +9,7 @@ from ecommerce.addresses.models import Address
 class AddressCreateView(auth_mixins.LoginRequiredMixin, views.CreateView):
     form_class = AddressCreateForm
     template_name = 'addresses/address_create.html'
-    # success_url = None
+    success_url = reverse_lazy('addresses:list')
 
     def form_valid(self, form):
         form.instance.user = self.request.user

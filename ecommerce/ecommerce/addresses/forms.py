@@ -6,7 +6,7 @@ from ecommerce.addresses.models import Address
 class AddressBaseForm(forms.ModelForm):
     class Meta:
         model = Address
-        exclude = ('id', 'user')
+        exclude = ('id', 'default', 'user')
 
 
 class AddressCreateForm(AddressBaseForm):
