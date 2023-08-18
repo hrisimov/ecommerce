@@ -46,6 +46,7 @@ PROJECT_APPS = (
     'ecommerce.products',
     'ecommerce.baskets',
     'ecommerce.addresses',
+    'ecommerce.main',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS

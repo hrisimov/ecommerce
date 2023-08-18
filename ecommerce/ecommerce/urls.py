@@ -25,6 +25,7 @@ urlpatterns = [
     path('products/', include('ecommerce.products.urls', namespace='products')),
     path('baskets/', include('ecommerce.baskets.urls', namespace='baskets')),
     path('addresses/', include('ecommerce.addresses.urls', namespace='addresses')),
+    path('', include('ecommerce.main.urls', namespace='main')),
 ]
 
 if settings.DEBUG:
