@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="#" class="form" method="post">
+    <form action="{% url 'addresses:create' %}" class="form" method="post">
         {% csrf_token %}
         <h2 class="title">Create an address.</h2>
         {{ form.non_field_errors }}

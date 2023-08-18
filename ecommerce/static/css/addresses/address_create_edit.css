@@ -9,8 +9,7 @@
             "first-name   last-name"
             "phone-number ."
             "province     town-city"
-            "address      address"
-            "def          .";
+            "address      address";
     align-items: end;
     gap: 24px;
     margin-bottom: 16px;
@@ -40,10 +39,6 @@
     grid-area: address;
 }
 
-.default {
-    grid-area: def;
-}
-
 label {
     display: inline-block;
     min-width: 105px;
@@ -51,10 +46,4 @@ label {
 
 .address input {
     width: 87%;
-}
-
-.default input {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
 }
