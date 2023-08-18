@@ -1,4 +1,9 @@
+import json
+
 from django.contrib.auth import mixins as auth_mixins
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -35,3 +40,15 @@ class AddressEditView(auth_mixins.LoginRequiredMixin, views.UpdateView):
         if obj not in self.request.user.address_set.all():
             return self.handle_no_permission()
         return obj
+
+
+@login_required
+def delete_address(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        pk = body['addressId']
+        address = get_object_or_404(Address, pk=pk)
+        address.delete()
+        return JsonResponse({
+            'message': 'The address was successfully deleted.',
+        })

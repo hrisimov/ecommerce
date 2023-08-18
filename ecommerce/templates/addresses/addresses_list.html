@@ -19,7 +19,7 @@
         </div>
         <div class="cards">
             {% for address in address_list %}
-                <article class="card">
+                <article id="{{ address.pk }}" class="card">
                     {% if address.default %}
                         <i class="fa-solid fa-thumbtack icon"></i>
                     {% endif %}
@@ -32,12 +32,20 @@
                             <a href="#" class="link">Set default</a>
                         {% endif %}
                         <a href="{% url 'addresses:edit' address.pk %}" class="link">Edit</a>
-                        <a href="#" class="link">Delete</a>
+                        <a href="#" class="link delete-address-link">Delete</a>
                     </div>
                 </article>
             {% empty %}
-                <h2>You don't have addresses yet.</h2>
+                <h2>You don't have addresses.</h2>
             {% endfor %}
         </div>
     </section>
+{% endblock %}
+
+{% block end_body_scripts %}
+    <script>
+        var deleteURL = '{% url 'addresses:delete' %}'
+        var csrftoken = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'js/addresses/address_delete.js' %}"></script>
 {% endblock %}
