@@ -1,5 +1,5 @@
 <header class="header">
-    <a href="#" class="logo-link">
+    <a href="{% url 'products:list' %}" class="logo-link">
         <i class="fa-solid fa-star-half-stroke icon"></i>
         <h2 class="text">Hrisim's store</h2>
     </a>
@@ -13,7 +13,7 @@
             </li>
             {% if request.user.is_authenticated %}
                 <li class="item">
-                    <a href="#" class="link">Account</a>
+                    <a href="{% url 'main:dashboard' %}" class="link">Dashboard</a>
                 </li>
                 <li class="item">
                     <a href="{% url 'accounts:logout' %}" class="link">Logout</a>

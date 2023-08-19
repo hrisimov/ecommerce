@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block styling %}
+    <link rel="stylesheet" href="{% static 'css/main/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="dashboard">
+        <h1 class="title">Dashboard</h1>
+        <div class="cards">
+            <a href="{% url 'accounts:details' %}" class="link account-link">
+                <article class="card">
+                    <i class="fa-solid fa-user-gear icon account-icon"></i>
+                    <div class="info">
+                        <h3 class="title">Account</h3>
+                        <p class="description">Details, change password, edit and delete</p>
+                    </div>
+                </article>
+            </a>
+            <a href="{% url 'addresses:list' %}" class="link addresses-link">
+                <article class="card">
+                    <i class="fa-solid fa-house icon house-icon"></i>
+                    <div class="info">
+                        <h3 class="title">Addresses</h3>
+                        <p class="description">List, create, edit, delete and set default</p>
+                    </div>
+                </article>
+            </a>
+        </div>
+    </section>
+{% endblock %}

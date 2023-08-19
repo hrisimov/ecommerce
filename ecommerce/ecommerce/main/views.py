@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth import mixins as auth_mixins
+from django.views import generic as views
 
-# Create your views here.
+
+class DashboardView(auth_mixins.LoginRequiredMixin, views.TemplateView):
+    template_name = 'main/dashboard.html'

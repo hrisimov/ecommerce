@@ -1,0 +1,50 @@
+.dashboard > .title {
+    border-bottom: 1px solid gray;
+    margin-bottom: 32px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.cards .link {
+    display: inline-block;
+    max-width: 360px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 16px 32px;
+}
+
+.card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.icon {
+    font-size: 40px;
+}
+
+.account-icon {
+    color: lightblue;
+}
+
+.house-icon {
+    color: lightgreen;
+}
+
+.card .title {
+    color: black;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.card .description {
+    color: gray;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    line-height: 1.3;
+}
