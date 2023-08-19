@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -88,9 +90,13 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "ecommerce_db",
+        "USER": "postgres",
+        "PASSWORD": "1123QwER",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
 }
 
@@ -144,6 +150,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.EcommerceUser'
+
+LOGIN_URL = reverse_lazy('accounts:login')
+LOGIN_REDIRECT_URL = reverse_lazy('main:dashboard')
+LOGOUT_REDIRECT_URL = reverse_lazy('products:list')
 
 # Celery settings
 CELERY_BROKER_URL = "redis://localhost:6379"
