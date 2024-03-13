@@ -1,24 +1,16 @@
 from django.contrib.auth import models as auth_models
-from django.contrib.auth import validators as auth_validators
-from django.core import validators
 from django.db import models
 
 from ecommerce.accounts.managers import EcommerceUserManager
-from ecommerce.common.validators import validate_name
+from ecommerce.common.validators import validate_name, MaxFileSizeInMbValidator
 
 
 class EcommerceUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
-    USERNAME_MAX_LENGTH = 50
-
     email = models.EmailField(
         unique=True,
-        validators=(validators.EmailValidator(),),
-    )
-
-    username = models.CharField(
-        max_length=USERNAME_MAX_LENGTH,
-        unique=True,
-        validators=(auth_validators.UnicodeUsernameValidator(),),
+        error_messages={
+            'unique': 'A user with that email already exists.',
+        },
     )
 
     is_staff = models.BooleanField(
@@ -37,13 +29,15 @@ class EcommerceUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ('username',)
 
 
 class Profile(models.Model):
     FIRST_NAME_MAX_LENGTH = 30
 
     LAST_NAME_MAX_LENGTH = 30
+
+    PHOTO_MAX_SIZE_MB = 5
+    PHOTO_UPLOAD_TO_DIR = 'profile_photos/'
 
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
@@ -57,6 +51,15 @@ class Profile(models.Model):
         null=True,
         blank=True,
         validators=(validate_name,),
+    )
+
+    photo = models.ImageField(
+        upload_to=PHOTO_UPLOAD_TO_DIR,
+        null=True,
+        blank=True,
+        validators=(
+            MaxFileSizeInMbValidator(PHOTO_MAX_SIZE_MB),
+        ),
     )
 
     user = models.OneToOneField(
