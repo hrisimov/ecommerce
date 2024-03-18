@@ -1,14 +1,18 @@
 from django.urls import path
 
-from ecommerce.accounts.views import register, activate, UserLoginView, UserLogoutView, UserPasswordResetView, \
+from ecommerce.accounts.views import UserRegisterView, activate_user, UserLoginView, UserLogoutView, UserPasswordResetView, \
     UserPasswordResetDoneView, UserPasswordResetConfirmView, UserPasswordResetCompleteView, get_account_details, \
-    UserPasswordChangeView, UserPasswordChangeDoneView, edit_account, delete_account, AccountDeleteDoneView
+    UserPasswordChangeView, UserPasswordChangeDoneView, edit_account, delete_account, AccountDeleteDoneView, \
+    UserCreatedView, UserActivatedView, UserNotActivatedView
 
 app_name = 'accounts'
 
 urlpatterns = (
-    path('register/', register, name='register'),
-    path('activate/<uidb64>/<token>/', activate, name='activate'),
+    path('register/', UserRegisterView.as_view(), name='user register'),
+    path('created/', UserCreatedView.as_view(), name='user created'),
+    path('activate/<uidb64>/<token>/', activate_user, name='user activate'),
+    path('activated/', UserActivatedView.as_view(), name='user activated'),
+    path('not-activated/', UserNotActivatedView.as_view(), name='user not activated'),
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('password-reset/', UserPasswordResetView.as_view(), name='password reset'),
@@ -22,5 +26,3 @@ urlpatterns = (
     path('delete/', delete_account, name='delete'),
     path('delete-done/', AccountDeleteDoneView.as_view(), name='delete done'),
 )
-
-from . import signals

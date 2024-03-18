@@ -19,7 +19,7 @@
         }
     </style>
 
-    <form class="form" action="{% url 'accounts:register' %}" method="post">
+    <form class="form" action="{% url 'accounts:user register' %}" method="post">
         {% csrf_token %}
         <h2 class="title">Create an account.</h2>
         {{ form.non_field_errors }}

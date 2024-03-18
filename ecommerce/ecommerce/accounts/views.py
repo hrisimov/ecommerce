@@ -1,7 +1,6 @@
-from django.contrib.auth import get_user_model, views as auth_views, logout
+from django.contrib.auth import get_user_model, views as auth_views, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -9,7 +8,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic as views
 
-from .forms import UserRegistrationForm, UserPasswordResetForm, UserEditForm, ProfileEditForm, UserDeleteForm
+from .forms import UserRegisterForm, UserPasswordResetForm, UserEditForm, ProfileEditForm, UserDeleteForm
 from .models import Profile
 from .tasks import send_account_activation_email
 from .tokens import account_activation_token
@@ -17,37 +16,54 @@ from .tokens import account_activation_token
 UserModel = get_user_model()
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            current_site = get_current_site(request)
-            message = render_to_string('accounts/registration/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            send_account_activation_email.delay(message, user.email)
-            return render(request, 'accounts/registration/account_created.html', {'user': user})
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'accounts/registration/index.html', {'form': form})
+class UserRegisterView(views.CreateView):
+    form_class = UserRegisterForm
+    template_name = 'accounts/registration/user_register.html'
+    success_url = reverse_lazy('accounts:user created')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('main:dashboard')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        response = super().form_valid(form=form)
+        current_site = get_current_site(self.request)
+        message = render_to_string('accounts/registration/user_activation_email.html', {
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(self.object.pk)),
+            'token': account_activation_token.make_token(self.object),
+        })
+        send_account_activation_email.delay(message, self.object.email)
+        return response
 
 
-def activate(request, uidb64, token):
+class UserCreatedView(views.TemplateView):
+    template_name = 'accounts/registration/user_created.html'
+
+
+def activate_user(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = UserModel.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, ObjectDoesNotExist):
+    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'accounts/registration/account_activated.html')
+        login(request, user)
+        return redirect('accounts:user activated')
     else:
-        return render(request, 'accounts/registration/account_not_activated.html')
+        return redirect('accounts:user not activated')
+
+
+class UserActivatedView(views.TemplateView):
+    template_name = 'accounts/registration/user_activated.html'
+
+
+class UserNotActivatedView(views.TemplateView):
+    template_name = 'accounts/registration/user_not_activated.html'
 
 
 class UserLoginView(auth_views.LoginView):

@@ -44,11 +44,11 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = ()
 
 PROJECT_APPS = (
-    'ecommerce.accounts',
-    'ecommerce.products',
-    'ecommerce.baskets',
-    'ecommerce.addresses',
-    'ecommerce.main',
+    'ecommerce.accounts.apps.AccountsConfig',
+    'ecommerce.products.apps.ProductsConfig',
+    'ecommerce.baskets.apps.BasketsConfig',
+    'ecommerce.addresses.apps.AddressesConfig',
+    'ecommerce.main.apps.MainConfig',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -104,20 +104,23 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
+
+if not DEBUG:
+    AUTH_PASSWORD_VALIDATORS.extend([
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ])
 
 
 # Internationalization
@@ -159,6 +162,7 @@ LOGOUT_REDIRECT_URL = reverse_lazy('products:list')
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
+# Email host server
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True

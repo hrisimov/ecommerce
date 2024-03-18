@@ -7,10 +7,10 @@ from ecommerce.accounts.models import Profile
 UserModel = get_user_model()
 
 
-class UserRegistrationForm(auth_forms.UserCreationForm):
+class UserRegisterForm(auth_forms.UserCreationForm):
     class Meta:
         model = UserModel
-        fields = ('email', 'username')
+        fields = (UserModel.USERNAME_FIELD,)
 
 
 class UserPasswordResetForm(auth_forms.PasswordResetForm):
@@ -36,7 +36,7 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = UserModel
-        fields = ('email', 'username')
+        fields = ('email',)
         widgets = {
             'email': forms.EmailInput(attrs={'readonly': 'readonly'}),
         }
