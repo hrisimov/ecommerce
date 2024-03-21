@@ -1,9 +1,10 @@
-from django.contrib.auth import get_user_model, views as auth_views, logout, login
+from django.contrib.auth import get_user_model, views as auth_views, mixins as auth_mixins, logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic as views
@@ -12,19 +13,15 @@ from .forms import UserRegisterForm, UserPasswordResetForm, UserEditForm, Profil
 from .models import Profile
 from .tasks import send_account_activation_email
 from .tokens import account_activation_token
+from ..common.view_mixins import RedirectAuthenticatedUserMixin
 
 UserModel = get_user_model()
 
 
-class UserRegisterView(views.CreateView):
+class UserRegisterView(RedirectAuthenticatedUserMixin, views.CreateView):
     form_class = UserRegisterForm
     template_name = 'accounts/registration/user_register.html'
     success_url = reverse_lazy('accounts:user created')
-
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('main:dashboard')
-        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         response = super().form_valid(form=form)
@@ -42,20 +39,31 @@ class UserCreatedView(views.TemplateView):
     template_name = 'accounts/registration/user_created.html'
 
 
-def activate_user(request, uidb64, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = UserModel.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
-        user = None
+class UserActivateRedirectView(views.RedirectView):
+    @staticmethod
+    def get_user(uidb64):
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = UserModel._default_manager.get(pk=uid)
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            UserModel.DoesNotExist,
+            ValidationError,
+        ):
+            user = None
+        return user
 
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        login(request, user)
-        return redirect('accounts:user activated')
-    else:
-        return redirect('accounts:user not activated')
+    def get_redirect_url(self, uidb64, token):
+        user = self.get_user(uidb64)
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            login(self.request, user)
+            return reverse('accounts:user activated')
+        else:
+            return reverse('accounts:user not activated')
 
 
 class UserActivatedView(views.TemplateView):
@@ -67,32 +75,32 @@ class UserNotActivatedView(views.TemplateView):
 
 
 class UserLoginView(auth_views.LoginView):
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/user_login.html'
     redirect_authenticated_user = True
 
 
-class UserLogoutView(auth_views.LogoutView):
+class UserLogoutView(auth_mixins.LoginRequiredMixin, auth_views.LogoutView):
     pass
 
 
-class UserPasswordResetView(auth_views.PasswordResetView):
+class UserPasswordResetView(RedirectAuthenticatedUserMixin, auth_views.PasswordResetView):
     form_class = UserPasswordResetForm
-    template_name = 'accounts/password_reset/index.html'
-    email_template_name = 'accounts/password_reset/password_reset_email.html'
-    success_url = reverse_lazy('accounts:password reset done')
+    template_name = 'accounts/password_reset/user_password_reset.html'
+    email_template_name = 'accounts/password_reset/user_password_reset_email.html'
+    success_url = reverse_lazy('accounts:user password reset done')
 
 
 class UserPasswordResetDoneView(auth_views.PasswordResetDoneView):
-    template_name = 'accounts/password_reset/password_reset_done.html'
+    template_name = 'accounts/password_reset/user_password_reset_done.html'
 
 
 class UserPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    template_name = 'accounts/password_reset/password_reset_confirm.html'
-    success_url = reverse_lazy('accounts:password reset complete')
+    template_name = 'accounts/password_reset/user_password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:user password reset complete')
 
 
 class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
-    template_name = 'accounts/password_reset/password_reset_complete.html'
+    template_name = 'accounts/password_reset/user_password_reset_complete.html'
 
 
 @login_required

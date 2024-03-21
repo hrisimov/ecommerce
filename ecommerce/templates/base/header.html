@@ -16,14 +16,14 @@
                     <a href="{% url 'main:dashboard' %}" class="link">Dashboard</a>
                 </li>
                 <li class="item">
-                    <a href="{% url 'accounts:logout' %}" class="link">Logout</a>
+                    <a href="{% url 'accounts:user logout' %}" class="link">Logout</a>
                 </li>
             {% else %}
                 <li class="item">
-                    <a href="{% url 'accounts:login' %}" class="link">Login</a>
+                    <a href="{% url 'accounts:user login' %}" class="link">Login</a>
                 </li>
                 <li class="item">
-                    <a href="{% url 'accounts:register' %}" class="link">Register</a>
+                    <a href="{% url 'accounts:user register' %}" class="link">Register</a>
                 </li>
             {% endif %}
         </ul>

@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 
 from ecommerce.accounts.models import Profile
 
@@ -19,7 +18,7 @@ class UserPasswordResetForm(auth_forms.PasswordResetForm):
         try:
             UserModel.objects.get(email=email)
             return email
-        except ObjectDoesNotExist:
+        except UserModel.DoesNotExist:
             raise auth_forms.ValidationError('Error')
 
 

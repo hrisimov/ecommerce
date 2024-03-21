@@ -154,7 +154,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.EcommerceUser'
 
-LOGIN_URL = reverse_lazy('accounts:login')
+LOGIN_URL = reverse_lazy('accounts:user login')
 LOGIN_REDIRECT_URL = reverse_lazy('main:dashboard')
 LOGOUT_REDIRECT_URL = reverse_lazy('products:list')
 

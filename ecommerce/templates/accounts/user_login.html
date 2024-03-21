@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'accounts:login' %}?next={{ next }}" class="form" method="post">
+    <form action="{% url 'accounts:user login' %}?next={{ next }}" class="form" method="post">
         {% csrf_token %}
         <h2 class="title">Login to your account.</h2>
         {{ form.non_field_errors }}
@@ -25,10 +25,10 @@
             {{ form.password.errors }}
             <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
             {{ form.password }}
-            <a href="{% url 'accounts:password reset' %}" class="link forgot-password-link">Forgot password?</a>
+            <a href="{% url 'accounts:user password reset' %}" class="link forgot-password-link">Forgot password?</a>
         </div>
 
         <button class="btn">Login</button>
-        <a href="{% url 'accounts:register' %}" class="link register-link">Don't have an account?</a>
+        <a href="{% url 'accounts:user register' %}" class="link register-link">Don't have an account?</a>
     </form>
 {% endblock %}
