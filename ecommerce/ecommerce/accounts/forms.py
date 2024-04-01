@@ -12,6 +12,12 @@ class UserRegisterForm(auth_forms.UserCreationForm):
         fields = (UserModel.USERNAME_FIELD,)
 
 
+class UserDeactivateUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ()
+
+
 class UserPasswordResetForm(auth_forms.PasswordResetForm):
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -22,32 +28,7 @@ class UserPasswordResetForm(auth_forms.PasswordResetForm):
             raise auth_forms.ValidationError('Error')
 
 
-class UserEditForm(forms.ModelForm):
-    def __init__(self, user, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.user = user
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if not email == self.user.email:
-            raise auth_forms.ValidationError('Email can not be changed.')
-        return email
-
-    class Meta:
-        model = UserModel
-        fields = ('email',)
-        widgets = {
-            'email': forms.EmailInput(attrs={'readonly': 'readonly'}),
-        }
-
-
-class UserDeleteForm(forms.ModelForm):
-    class Meta:
-        model = UserModel
-        fields = ()
-
-
-class ProfileEditForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name')
+        exclude = ('user',)
