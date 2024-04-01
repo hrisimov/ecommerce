@@ -51,7 +51,7 @@ PROJECT_APPS = (
     'ecommerce.main.apps.MainConfig',
 )
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS + ('django_cleanup.apps.CleanupConfig',)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -12,6 +12,11 @@ class UserRegisterForm(auth_forms.UserCreationForm):
         fields = (UserModel.USERNAME_FIELD,)
 
 
+class UserUpdateForm(auth_forms.UserChangeForm):
+    class Meta(auth_forms.UserChangeForm.Meta):
+        model = UserModel
+
+
 class UserDeactivateUpdateForm(forms.ModelForm):
     class Meta:
         model = UserModel
