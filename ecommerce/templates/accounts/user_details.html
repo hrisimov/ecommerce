@@ -29,7 +29,7 @@
             {% endif %}
         </p>
     </div>
-    <a href="{% url 'accounts:password change' %}" class="btn change-password-link">Change password</a>
-    <a href="{% url 'accounts:edit' %}" class="btn edit-account-link">Edit account</a>
-    <a href="{% url 'accounts:delete' %}" class="btn delete-account-link">Delete account</a>
+    <a href="{% url 'accounts:user password change' %}" class="btn change-password-link">Change password</a>
+    <a href="{% url 'accounts:profile update' %}" class="btn edit-account-link">Edit account</a>
+    <a href="{% url 'accounts:user deactivate' %}" class="btn delete-account-link">Delete account</a>
 {% endblock %}

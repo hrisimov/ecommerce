@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Edit account
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'accounts:profile update' %}" class="form" method="post">
+        {% csrf_token %}
+        <h2 class="title">Edit your account.</h2>
+        {{ form.non_field_errors }}
+
+        <div>
+            {{ form.first_name.errors }}
+            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+            {{ form.first_name }}
+        </div>
+
+        <div>
+            {{ form.last_name.errors }}
+            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+            {{ form.last_name }}
+        </div>
+
+        <div>
+            {{ form.photo.errors }}
+            <label for="{{ form.photo.id_for_label }}">{{ form.photo.label }}</label>
+            {{ form.photo }}
+        </div>
+
+        <button class="btn">Save</button>
+    </form>
+{% endblock %}

@@ -1,19 +1,16 @@
 from django.contrib.auth import get_user_model, views as auth_views, mixins as auth_mixins, logout, login
-from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
-from django.utils.encoding import force_bytes, force_str
+from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic as views
 
-from .forms import UserRegisterForm, UserPasswordResetForm, UserEditForm, ProfileEditForm, UserDeleteForm
-from .models import Profile
-from .tasks import send_account_activation_email
-from .tokens import account_activation_token
-from ..common.view_mixins import RedirectAuthenticatedUserMixin
+from ecommerce.accounts.forms import UserRegisterForm, UserPasswordResetForm, ProfileUpdateForm, UserDeactivateUpdateForm
+from ecommerce.accounts.tasks import send_account_activation_email
+from ecommerce.accounts.tokens import account_activation_token
+from ecommerce.common.view_mixins import RedirectAuthenticatedUserMixin
 
 UserModel = get_user_model()
 
@@ -46,11 +43,11 @@ class UserActivateRedirectView(views.RedirectView):
             uid = urlsafe_base64_decode(uidb64).decode()
             user = UserModel._default_manager.get(pk=uid)
         except (
-            TypeError,
-            ValueError,
-            OverflowError,
-            UserModel.DoesNotExist,
-            ValidationError,
+                TypeError,
+                ValueError,
+                OverflowError,
+                UserModel.DoesNotExist,
+                ValidationError,
         ):
             user = None
         return user
@@ -74,6 +71,24 @@ class UserNotActivatedView(views.TemplateView):
     template_name = 'accounts/registration/user_not_activated.html'
 
 
+class UserDeactivateUpdateView(auth_mixins.LoginRequiredMixin, views.UpdateView):
+    form_class = UserDeactivateUpdateForm
+    template_name = 'accounts/deactivation/user_deactivate.html'
+    success_url = reverse_lazy('accounts:user deactivate done')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        form.instance.is_active = False
+        logout(self.request)
+        return super().form_valid(form)
+
+
+class UserDeactivateDoneView(views.TemplateView):
+    template_name = 'accounts/deactivation/user_deactivate_done.html'
+
+
 class UserLoginView(auth_views.LoginView):
     template_name = 'accounts/user_login.html'
     redirect_authenticated_user = True
@@ -81,6 +96,14 @@ class UserLoginView(auth_views.LoginView):
 
 class UserLogoutView(auth_mixins.LoginRequiredMixin, auth_views.LogoutView):
     pass
+
+
+class UserDetailView(auth_mixins.LoginRequiredMixin, views.DetailView):
+    template_name = 'accounts/user_details.html'
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class UserPasswordResetView(RedirectAuthenticatedUserMixin, auth_views.PasswordResetView):
@@ -103,56 +126,19 @@ class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     template_name = 'accounts/password_reset/user_password_reset_complete.html'
 
 
-@login_required
-def get_account_details(request):
-    profile = Profile.objects.get(user=request.user)
-    return render(request, 'accounts/account_details.html', {'profile': profile})
-
-
 class UserPasswordChangeView(auth_views.PasswordChangeView):
-    template_name = 'accounts/password_change/index.html'
-    success_url = reverse_lazy('accounts:password change done')
+    template_name = 'accounts/password_change/user_password_change.html'
+    success_url = reverse_lazy('accounts:user password change done')
 
 
 class UserPasswordChangeDoneView(auth_views.PasswordChangeDoneView):
-    template_name = 'accounts/password_change/password_change_done.html'
+    template_name = 'accounts/password_change/user_password_change_done.html'
 
 
-@login_required
-def edit_account(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(request.user, request.POST, instance=request.user)
-        profile_form = ProfileEditForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            return redirect('accounts:details')
-    else:
-        user_form = UserEditForm(request.user, instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
+class ProfileUpdateView(auth_mixins.LoginRequiredMixin, views.UpdateView):
+    form_class = ProfileUpdateForm
+    template_name = 'accounts/profile_update.html'
+    success_url = reverse_lazy('accounts:user details')
 
-    context = {
-        'user_form': user_form,
-        'profile_form': profile_form,
-    }
-
-    return render(request, 'accounts/account_edit.html', context)
-
-
-@login_required
-def delete_account(request):
-    if request.method == 'POST':
-        form = UserDeleteForm(request.POST, instance=request.user)
-        form.instance.is_active = False
-        if form.is_valid():
-            form.save()
-            logout(request)
-            return redirect('accounts:delete done')
-    else:
-        form = UserDeleteForm(instance=request.user)
-
-    return render(request, 'accounts/account_delete/index.html', {'form': form})
-
-
-class AccountDeleteDoneView(views.TemplateView):
-    template_name = 'accounts/account_delete/account_delete_done.html'
+    def get_object(self, queryset=None):
+        return self.request.user.profile
