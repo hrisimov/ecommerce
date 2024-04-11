@@ -7,7 +7,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic as views
 
-from ecommerce.accounts.forms import UserRegisterForm, UserPasswordResetForm, ProfileUpdateForm, UserDeactivateUpdateForm
+from ecommerce.accounts.forms import UserRegisterForm, UserPasswordResetForm, ProfileUpdateForm, \
+    UserDeactivateUpdateForm
 from ecommerce.accounts.tasks import send_account_activation_email
 from ecommerce.accounts.tokens import account_activation_token
 from ecommerce.common.view_mixins import RedirectAuthenticatedUserMixin
@@ -118,8 +119,14 @@ class UserPasswordResetDoneView(auth_views.PasswordResetDoneView):
 
 
 class UserPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    template_name = 'accounts/password_reset/user_password_reset_confirm.html'
+    template_name_valid = 'accounts/password_reset/user_password_reset_confirm_valid.html'
+    template_name_invalid = 'accounts/password_reset/user_password_reset_confirm_invalid.html'
     success_url = reverse_lazy('accounts:user password reset complete')
+
+    def get_template_names(self):
+        if not self.validlink:
+            return [self.template_name_invalid]
+        return [self.template_name_valid]
 
 
 class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
