@@ -1,13 +1,16 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    Delete account
+    Account deactivate
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'accounts:user deactivate' %}" class="form" method="post">
-        {% csrf_token %}
-        <h1 class="title">Are you sure you want to delete your account?</h1>
-        <button class="btn">Confirm</button>
-    </form>
+    <div class="centered-content-wrapper">
+        <form action="{% url 'accounts:user deactivate' %}" method="post">
+            {% csrf_token %}
+            <h1 class="title">Are you sure you want to deactivate your account?</h1>
+            <button class="btn btn-red">Confirm</button>
+        </form>
+    </div>
 {% endblock %}

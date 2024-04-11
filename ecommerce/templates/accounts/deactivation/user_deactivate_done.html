@@ -1,17 +1,13 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
-	Account deleted
+    Account deactivate done
 {% endblock %}
 
 {% block content %}
-    <style>
-        .main h2 {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-    </style>
-
-	<h2>Your account was deleted.</h2>
-    <h3>Thank you that you were our client!</h3>
+    <div class="centered-content-wrapper">
+        <h1 class="title">Your account was deactivated.</h1>
+        <h2 class="subtitle">Thanks that you were our client!</h2>
+        <i class="fa-solid fa-user-xmark icon icon-red"></i>
+    </div>
 {% endblock %}
