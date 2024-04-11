@@ -1,29 +1,13 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     Successful registration
 {% endblock %}
 
 {% block content %}
-    <style>
-        .main h2 {
-            display: inline-block;
-            margin-bottom: 16px;
-        }
-
-        .main i {
-            font-size: 26px;
-            color: green;
-        }
-
-        .main h3 {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-    </style>
-
-    <h2>Your account was successfully activated.</h2>
-    <i class="fa-solid fa-circle-check"></i>
-    <h3>Thank you for your registration.</h3>
-    <h3>Now you can <a href="#">login</a> to your account.</h3>
+    <div class="centered-content-wrapper">
+        <h1 class="title">Your account was successfully activated.</h1>
+        <h2 class="subtitle">Thank you for your registration.</h2>
+        <i class="fa-solid fa-user-check icon icon-green"></i>
+    </div>
 {% endblock %}

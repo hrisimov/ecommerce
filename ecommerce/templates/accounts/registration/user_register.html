@@ -1,54 +1,20 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    Register
+    Create an account
+{% endblock %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 
 {% block content %}
-    <style>
-        .main label {
-            display: block;
-        }
-
-        .main .btn {
-            margin-bottom: 16px;
-        }
-
-        .main .link {
-            font-size: 14px;
-        }
-    </style>
-
-    <form class="form" action="{% url 'accounts:user register' %}" method="post">
+    <form action="{% url 'accounts:user register' %}" method="post" class="form">
         {% csrf_token %}
-        <h2 class="title">Create an account.</h2>
-        {{ form.non_field_errors }}
-
-        <div>
-            {{ form.email.errors }}
-            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-            {{ form.email }}
-        </div>
-
-        <div>
-            {{ form.username.errors }}
-            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-            {{ form.username }}
-        </div>
-
-        <div>
-            {{ form.password1.errors }}
-            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
-            {{ form.password1 }}
-        </div>
-
-        <div>
-            {{ form.password2.errors }}
-            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
-            {{ form.password2 }}
-        </div>
-
+        <h1 class="title">Create an account.</h1>
+        {% include 'partials/form.html' with form=form %}
         <button class="btn">Register</button>
-        <a class="link" href="{% url 'accounts:user login' %}">Already have an account?</a>
+        <a href="{% url 'accounts:user login' %}" class="link">Already have an account?</a>
     </form>
 {% endblock %}

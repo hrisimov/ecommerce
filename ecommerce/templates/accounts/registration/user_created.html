@@ -1,20 +1,13 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     Account created
 {% endblock %}
 
 {% block content %}
-    <style>
-        .main h2 {
-            margin-bottom: 16px;
-        }
-
-        .main h3 {
-            text-align: center;
-        }
-    </style>
-
-    <h2>Check your email address to activate your account.</h2>
-    <h3>We have sent an activation link to {{ user.email }}</h3>
+    <div class="centered-content-wrapper">
+        <h1 class="title">Check your email address to activate your account.</h1>
+        <h2 class="subtitle">We have sent you an activation link.</h2>
+        <i class="fa-regular fa-envelope icon icon-orange"></i>
+    </div>
 {% endblock %}

@@ -1,9 +1,12 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
-    Unsuccessful registration
+    Invalid account activation link
 {% endblock %}
 
 {% block content %}
-    <h2>Activation link is invalid.</h2>
+    <div class="centered-content-wrapper">
+        <h1 class="title">Account activation link is invalid.</h1>
+        <i class="fa-solid fa-triangle-exclamation icon icon-red"></i>
+    </div>
 {% endblock %}
