@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 
 from ecommerce.accounts.models import Profile
+from ecommerce.common.widgets import ImageInput
 
 UserModel = get_user_model()
 
@@ -37,3 +38,6 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user',)
+        widgets = {
+            'photo': ImageInput(),
+        }
