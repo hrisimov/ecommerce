@@ -1,34 +1,21 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
-    Login
+    Account login
 {% endblock %}
 
-{% block styling %}
-    <link rel="stylesheet" href="{% static 'css/accounts/login.css' %}">
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'accounts:user login' %}?next={{ next }}" class="form" method="post">
+    <form action="{% url 'accounts:user login' %}?next={{ next }}" method="post" class="form">
         {% csrf_token %}
-        <h2 class="title">Login to your account.</h2>
-        {{ form.non_field_errors }}
-
-        <div>
-            {{ form.username.errors }}
-            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-            {{ form.username }}
-        </div>
-
-        <div>
-            {{ form.password.errors }}
-            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
-            {{ form.password }}
-            <a href="{% url 'accounts:user password reset' %}" class="link forgot-password-link">Forgot password?</a>
-        </div>
-
+        <h1 class="title">Login to your account.</h1>
+        {% include 'partials/form.html' with form=form %}
         <button class="btn">Login</button>
-        <a href="{% url 'accounts:user register' %}" class="link register-link">Don't have an account?</a>
+        <a href="{% url 'accounts:user password reset' %}" class="link">Forgot password?</a>
+        <a href="{% url 'accounts:user register' %}" class="link">Don't have an account?</a>
     </form>
 {% endblock %}
