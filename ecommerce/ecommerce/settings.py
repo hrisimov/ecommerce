@@ -39,9 +39,12 @@ DJANGO_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
 )
 
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'widget_tweaks',
+)
 
 PROJECT_APPS = (
     'ecommerce.accounts.apps.AccountsConfig',
@@ -82,6 +85,8 @@ TEMPLATES = [
         },
     },
 ]
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
