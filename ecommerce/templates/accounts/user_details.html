@@ -1,35 +1,29 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
     Account details
 {% endblock %}
 
-{% block styling %}
-    <link rel="stylesheet" href="{% static 'css/accounts/account_details.css' %}">
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/accounts/user_details.css' %}">
 {% endblock %}
 
 {% block content %}
     <h1 class="title">Account details:</h1>
-    <div>
-        <p>Email: {{ request.user.email }}</p>
-        <p>Username: {{ request.user.username }}</p>
-        <p>First name:
-            {% if profile.first_name %}
-                {{ profile.first_name }}
-            {% else %}
-                Unset
-            {% endif %}
-        </p>
-        <p>Last name:
-            {% if profile.last_name %}
-                {{ profile.last_name }}
-            {% else %}
-                Unset
-            {% endif %}
-        </p>
+    {% if user.profile.photo %}
+        <img src="{{ user.profile.photo.url }}" alt="profile-photo">
+    {% else %}
+        <img src="{% static 'images/default_profile_photo.jpg' %}" alt="profile-photo">
+    {% endif %}
+    <div class="info-wrapper">
+        <p>Email: {{ user.email }}</p>
+        <p>First name: {{ user.profile.first_name|default:'Unset' }}</p>
+        <p>Last name: {{ user.profile.last_name|default:'Unset' }}</p>
     </div>
-    <a href="{% url 'accounts:user password change' %}" class="btn change-password-link">Change password</a>
-    <a href="{% url 'accounts:profile update' %}" class="btn edit-account-link">Edit account</a>
-    <a href="{% url 'accounts:user deactivate' %}" class="btn delete-account-link">Delete account</a>
+    <div class="buttons-wrapper">
+        <a href="{% url 'accounts:user password change' %}" class="btn btn-green">Change password</a>
+        <a href="{% url 'accounts:profile update' %}" class="btn btn-yellow">Update account</a>
+        <a href="{% url 'accounts:user deactivate' %}" class="btn btn-red">Deactivate account</a>
+    </div>
 {% endblock %}

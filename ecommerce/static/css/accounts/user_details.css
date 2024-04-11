@@ -1,0 +1,42 @@
+.main .root {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas:
+    "title title title"
+    "photo info buttons";
+    gap: 48px;
+}
+
+.main .title {
+    grid-area: title;
+    text-align: center;
+    border: 1px dashed black;
+}
+
+.main img {
+    grid-area: photo;
+    max-width: 250px;
+    border-radius: 100%;
+}
+
+.main .info-wrapper {
+    grid-area: info;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: lightgray;
+    border-radius: 16px;
+    overflow-wrap: anywhere;
+    padding: 32px;
+}
+
+.main .buttons-wrapper {
+    grid-area: buttons;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
