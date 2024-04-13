@@ -32,7 +32,7 @@ class AddressListView(auth_mixins.LoginRequiredMixin, views.ListView):
 class AddressEditView(auth_mixins.LoginRequiredMixin, views.UpdateView):
     model = Address
     form_class = AddressEditForm
-    template_name = 'addresses/address_edit.html'
+    template_name = 'addresses/address_update.html'
     success_url = reverse_lazy('addresses:list')
 
     def get_object(self, queryset=None):
