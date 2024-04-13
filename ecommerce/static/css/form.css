@@ -1,36 +1,33 @@
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 390px;
+.root {
+    width: 22%;
+}
+
+form {
+    width: 100%;
     border: 2px solid lightgray;
     border-radius: 8px;
     padding: 40px;
 }
 
-.form .field-wrapper {
+form .field-wrapper {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.form .field-wrapper:has(input[type=file]) {
-    gap: 8px;
-}
-
-.form .field-wrapper:not(:has(~ .field-wrapper)) {
+form .field-wrapper:not(:has(~ .field-wrapper)) {
     margin-bottom: 16px;
 }
 
-.form > *:not(.field-wrapper) {
+form > *:not(.field-wrapper) {
     text-align: center;
 }
 
-.form .error-list .item {
+form .error-list .item {
     color: red;
 }
 
-.form input.default {
+form input.default {
     height: 48px;
     border-width: 1px;
     border-style: solid;
@@ -39,23 +36,33 @@
     padding-left: 8px;
 }
 
-.form input.valid {
+form input.valid {
     border-color: green;
 }
 
-.form input.valid:focus {
+form input.valid:focus {
     outline: 1px solid green;
 }
 
-.form input.invalid {
+form input.invalid {
     border-color: red;
 }
 
-.form input.invalid:focus {
+form input.invalid:focus {
     outline: 1px solid red;
 }
 
-.form img {
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form .field-wrapper:has(input[type=file]) {
+    gap: 8px;
+}
+
+.form .field-wrapper img {
     align-self: flex-start;
 }
 

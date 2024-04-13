@@ -8,6 +8,7 @@ UserModel = get_user_model()
 
 class Address(models.Model):
     FIRST_NAME_MAX_LENGTH = 30
+
     LAST_NAME_MAX_LENGTH = 30
 
     PHONE_NUMBER_MAX_LENGTH = 20
