@@ -1,20 +1,20 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
-    Create address
+    Address create
 {% endblock %}
 
-{% block styling %}
-    <link rel="stylesheet" href="{% static 'css/addresses/address_create_edit.css' %}">
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addresses/address_create_update.css' %}">
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'addresses:create' %}" class="form" method="post">
+    <form action="{% url 'addresses:create' %}" method="post">
         {% csrf_token %}
-        <h2 class="title">Create an address.</h2>
-        {{ form.non_field_errors }}
-        {% include 'addresses/address_fields.html' %}
+        <h1>Create an address.</h1>
+        {% include 'partials/form.html' with form=form %}
         <button class="btn">Create</button>
     </form>
 {% endblock %}

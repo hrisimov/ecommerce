@@ -1,0 +1,59 @@
+.root {
+    width: 33%;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+        "title         title"
+        "non-field     non-field"
+        "hidden-fields hidden-fields"
+        "first-name    last-name"
+        "phone-number  ."
+        "province      town-city"
+        "address-line  address-line"
+        "btn           btn";
+    row-gap: 16px;
+    column-gap: 24px;
+}
+
+form h1 {
+    grid-area: title;
+}
+
+form .non-field {
+    grid-area: non-field;
+}
+
+form .hidden-fields {
+    grid-area: hidden-fields;
+}
+
+form div:nth-of-type(1) {
+    grid-area: first-name;
+}
+
+form div:nth-of-type(2) {
+    grid-area: last-name;
+}
+
+form div:nth-of-type(3) {
+    grid-area: phone-number;
+}
+
+form div:nth-of-type(4) {
+    grid-area: province;
+}
+
+form div:nth-of-type(5) {
+    grid-area: town-city;
+}
+
+form div:nth-of-type(6) {
+    grid-area: address-line;
+}
+
+form .btn {
+    grid-area: btn;
+}
