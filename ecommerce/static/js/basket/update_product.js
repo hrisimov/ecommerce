@@ -40,5 +40,5 @@ function updateTemplateValues(select, {productQuantity, productStock, basketTota
     }
 
     document.querySelector('.header .products-count').textContent = basketTotalQuantity;
-    document.querySelector('.main .wrapper > div .value').textContent = `${subtotalPrice}$`;
+    document.querySelector('.main .root > div .value').textContent = `${subtotalPrice}$`;
 }

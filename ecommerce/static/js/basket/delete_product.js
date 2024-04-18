@@ -26,13 +26,13 @@ async function deleteProduct() {
 function updateTemplate(article, {basketTotalQuantity, subtotalPrice}) {
     article.remove();
     document.querySelector('.header .products-count').textContent = basketTotalQuantity;
-    document.querySelector('.main .wrapper > div .value').textContent = `${subtotalPrice}$`;
+    document.querySelector('.main .root > div .value').textContent = `${subtotalPrice}$`;
 
     if (basketTotalQuantity === 0) {
         let h2 = document.createElement('h2');
         h2.classList.add('subtitle');
         h2.textContent = 'Your basket is empty.';
         document.querySelector('.main .basket').appendChild(h2);
-        document.querySelector('.main .wrapper > div').remove();
+        document.querySelector('.main .root > div').remove();
     }
 }
