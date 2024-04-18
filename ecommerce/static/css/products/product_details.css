@@ -4,7 +4,6 @@
 
 .main .content-wrapper {
     display: flex;
-    gap: 128px;
 }
 
 .images {
