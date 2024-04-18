@@ -67,7 +67,6 @@ class Product(AuditEntity):
 class ProductImage(AuditEntity):
     image = models.ImageField(
         upload_to='product_images/',
-        default='product_images/default.png',
     )
 
     is_main = models.BooleanField(
