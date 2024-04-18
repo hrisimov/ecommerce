@@ -1,4 +1,4 @@
-.wrapper {
+.root {
     display: flex;
     align-items: flex-start;
     gap: 32px;
@@ -27,8 +27,6 @@
 }
 
 .img {
-    object-fit: cover;
-    width: 150px;
     height: 150px;
 }
 
@@ -72,7 +70,7 @@ select {
     color: red;
 }
 
-.wrapper > div {
+.root > div {
     width: 15vw;
     background-color: white;
     border-radius: 16px;

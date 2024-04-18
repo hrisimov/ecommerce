@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load filters %}
 
@@ -6,7 +6,7 @@
 	Basket
 {% endblock %}
 
-{% block styling %}
+{% block additional_styles %}
     <link rel="stylesheet" href="{% static 'css/basket/basket_summary.css' %}">
 {% endblock %}
 
