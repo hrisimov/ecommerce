@@ -1,4 +1,4 @@
-.main > .wrapper {
+.main > .root {
     display: flex;
     gap: 160px;
 }
@@ -35,9 +35,8 @@
 }
 
 .main .card .img {
-    object-fit: cover;
-    width: 100%;
     height: 100%;
+    margin: 0 auto;
 }
 
 .main .card .info {
